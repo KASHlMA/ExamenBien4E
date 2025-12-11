@@ -1,0 +1,129 @@
+Vas a crear una API llamada ProductReportAPI que administra reportes de productos defectuosos dentro de una tienda.
+Los datos deberán guardarse temporalmente en memoria utilizando una lista, mapa o estructura similar.
+
+La API debe aplicar validaciones estrictas y responder siempre con el código HTTP correcto según la situación.
+
+Modelo de datos obligatorio
+
+Cada reporte debe contener exactamente:
+
+id: número entero largo generado automáticamente. El cliente no lo envía.
+
+productName: texto. No puede venir vacío.
+
+problemDescription: texto. Descripción del problema. No puede venir vacío.
+
+reportDate: texto o fecha. Debe venir en formato válido “YYYY-MM-DD”. No puede venir vacío.
+
+
+
+1. Registrar un reporte (POST /reports)
+
+El cliente debe enviar únicamente:
+
+productName
+
+problemDescription
+
+reportDate
+
+Validaciones:
+
+Si productName está vacío → campo obligatorio
+
+Si problemDescription está vacío → Bcampo obligatorio
+
+Si reportDate está vacío o mal formateado → campo obligatorio
+
+Si todo es válido:
+
+Se crea el reporte con id autogenerado.
+
+
+Se guarda en memoria.
+
+Se responde con CREATED.
+
+2. Consultar todos los reportes (GET /reports)
+
+Regresa todos los reportes almacenados.
+
+Si no hay registros, regresa una lista vacía.
+
+Siempre responde con OK.
+
+3. Buscar reportes por nombre (GET /reports/search?name=algo)
+
+El parámetro name es obligatorio.
+
+Validaciones:
+
+Si no se envía name → campo obligatorio
+
+Si no hay coincidencias → Error product no encontrado
+
+Si hay coincidencias, se regresan, y la respuesta es OK mostrar las coindicencias.
+
+
+4. Marcar un reporte como resuelto (PATCH /reports/{id}/resolve)
+
+Validaciones obligatorias:
+
+Si el id no existe → Error product no encontao
+
+
+Se actualiza en memoria
+
+Se responde con OK junto al objeto actualizado
+
+
+Debe existir una página HTML simple con un formulario para registrar reportes.
+
+Esta página debe cumplir:
+
+Validación con JavaScript para impedir que se envíen campos vacíos.
+
+Mostrar mensajes de error en color rojo.
+
+Mostrar mensajes de éxito en color verde.
+
+Usar fetch para enviar los datos al endpoint POST /reports.
+
+CSS obligatorio
+
+El ejercicio debe incluir el siguiente CSS tal cual:
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+}
+input, button {
+    padding: 6px;
+    margin: 5px;
+}
+.error {
+    color: red;
+    margin-top: 5px;
+}
+.success {
+    color: green;
+    margin-top: 5px;
+}
+.user-card {
+    border: 1px solid #aaa;
+    padding: 10px;
+    margin-top: 10px;
+    width: 260px;
+}
+
+JavaScript obligatorio (validaciones)
+
+El JavaScript debe:
+
+Validar que los tres campos del formulario no estén vacíos.
+
+Impedir el envío si falta algún dato.
+
+Mostrar los mensajes en pantalla usando las clases .error y .success.
+
+Hacer la petición POST a /reports usando fetch, solo si todo es válido.
